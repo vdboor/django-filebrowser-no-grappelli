@@ -11,6 +11,7 @@ from django import forms
 from django.forms.widgets import Input
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.admin.templatetags.admin_static import static
 
 # FILEBROWSER IMPORTS
 from filebrowser.settings import *
@@ -43,6 +44,7 @@ class FileBrowseWidget(Input):
         if value != "" and not isinstance(value, FileObject):
             value = FileObject(value, site=self.site)
         final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
+        final_attrs['search_icon'] = static('filebrowser/img/filebrowser_icon_show.gif')
         final_attrs['url'] = url
         final_attrs['directory'] = self.directory
         final_attrs['extensions'] = self.extensions
