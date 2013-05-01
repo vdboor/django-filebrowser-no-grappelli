@@ -49,6 +49,13 @@ try:
 except ImportError:
     from django.utils import simplejson as json
 
+# Django 1.4 clickjacking protection
+try:
+    from django.views.decorators.clickjacking import xframe_options_sameorigin
+except ImportError:
+    def xframe_options_sameorigin(view):
+        return view
+
 # This cache contains all *instantiated* FileBrowser sites
 _sites_cache = {}
 
@@ -117,7 +124,7 @@ class FileBrowserSite(object):
     directory = property(_directory_get, _directory_set)
 
     def filebrowser_view(self, view):
-        return staff_member_required(never_cache(view))
+        return staff_member_required(never_cache(xframe_options_sameorigin(view)))
 
     def get_urls(self):
         try:
