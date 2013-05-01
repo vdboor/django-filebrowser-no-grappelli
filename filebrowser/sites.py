@@ -20,6 +20,7 @@ from django.core.urlresolvers import reverse, get_urlconf, get_resolver
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.utils.encoding import smart_text
 from django.contrib import messages
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import DefaultStorage, default_storage, FileSystemStorage
 
@@ -169,7 +170,7 @@ def handle_file_upload(path, file, site):
 
 def filebrowser_view(view):
     "Only let staff browse the files"
-    return staff_member_required(never_cache(view))
+    return staff_member_required(never_cache(xframe_options_sameorigin(view)))
 
 
 class FileBrowserSite(object):
