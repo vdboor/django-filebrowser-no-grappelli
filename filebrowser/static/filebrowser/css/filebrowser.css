@@ -16,6 +16,9 @@
 .filebrowser td {
     padding: 9px 10px 6px 10px !important;
 }
+.filebrowser td.fb_icon {
+    min-width: 80px;
+}
 .filebrowser td.fb_thumbnail {
     line-height: 11px;
 }
