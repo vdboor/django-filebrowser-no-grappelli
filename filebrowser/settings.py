@@ -1,6 +1,7 @@
 # coding: utf-8
 
 # imports
+import re
 import os
 
 # django imports
@@ -91,7 +92,7 @@ IMAGE_MAXBLOCK = getattr(settings, 'FILEBROWSER_IMAGE_MAXBLOCK', 1024*1024)
 # Default is to exclude 'thumbnail' style naming of image-thumbnails.
 EXTENSION_LIST = []
 for exts in EXTENSIONS.values():
-    EXTENSION_LIST += exts
+    EXTENSION_LIST += [re.escape(ext) for ext in exts if ext]
 EXCLUDE = getattr(settings, 'FILEBROWSER_EXCLUDE', (r'_(%(exts)s)_.*_q\d{1,3}\.(%(exts)s)' % {'exts': ('|'.join(EXTENSION_LIST))},))
 # Max. Upload Size in Bytes.
 MAX_UPLOAD_SIZE = getattr(settings, "FILEBROWSER_MAX_UPLOAD_SIZE", 10485760)
