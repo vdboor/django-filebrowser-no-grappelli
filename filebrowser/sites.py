@@ -120,7 +120,12 @@ class FileBrowserSite(object):
         return staff_member_required(never_cache(view))
 
     def get_urls(self):
-        from django.conf.urls.defaults import patterns, url, include    
+        try:
+            # Django 1.6 requires this
+            from django.conf.urls import patterns, url, include
+        except ImportError:
+            # Django 1.3 compatibility
+            from django.conf.urls.defaults import patterns, url, include
 
         urlpatterns = patterns('',
     
